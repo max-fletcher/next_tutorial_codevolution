@@ -18,7 +18,7 @@ function ReviewLayout({
 
 export default ReviewLayout
 
-// If you wish to directly export the layout
+// NOTE: If you wish to directly export the layout
 
 // export default function ReviewLayout({
 //   children,

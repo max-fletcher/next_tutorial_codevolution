@@ -1,15 +1,20 @@
 "use client" // need this for "usePathname" to work
+
+// NOTE: This is now a template and not a layout. The difference between a layout and a template is that a template doesn't preserve state & effects i.e it resets state and effects on navigating
+// from one URL to another that uses the same template, but a layout does preserve state & effects(see what happens by changing this filename back to "layout.tsx" and fill in the input box
+// and navigate to other routes that use this file as layout(register, login & forgot-password))
+
 import Link from "next/link"
 import { usePathname } from "next/navigation" // used to get current path url. See how it's used below.
 import { useState } from "react"
 
-// Metadata doesn't work with "use client" i.e throws an error
+// NOTE: Metadata doesn't work with "use client" i.e throws an error
 // export const metadata = {
 //   title: 'Layout for product reviews only',
 //   description: 'Layout for product reviews only',
 // }
 
-// The round brackets for the folder will be ignored by app-router so typing "http://localhost:3000/auth/with-auth-layout/login" would work if round brackets were absent
+// NOTE: The round brackets for the folder will be ignored by app-router so typing "http://localhost:3000/auth/with-auth-layout/login" would work if round brackets were absent
 // but with round brackets aroung "auth" and "with-auth-layout", the route above will not be found. Its beacuse "auth" and "with-auth-layout" will be ignored so it becomes
 // "http://localhost:3000/login"
 
@@ -53,7 +58,7 @@ function AuthLayout({
 
 export default AuthLayout
 
-// If you wish to directly export the layout
+// NOTE: If you wish to directly export the layout
 
 // export default function AuthLayout({
 //   children,

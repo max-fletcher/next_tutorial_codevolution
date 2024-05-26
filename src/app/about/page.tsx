@@ -1,4 +1,4 @@
-// will take precedence over layout metadata title
+// NOTE: will take precedence over layout metadata title
 export const metadata = {
   title: 'Layout for about page',
 }

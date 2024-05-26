@@ -1,4 +1,4 @@
-// slug will be an array of strings
+// NOTE: slug will be an array of strings
 const Docs = ({params: {slug}} : {params: { slug: string[] }}) => {
 
   if(slug?.length >= 2){

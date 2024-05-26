@@ -2,7 +2,7 @@ import { Metadata } from "next"
 import "./styles.css"
 
 export const metadata : Metadata = {
-  // a title metadata can have these 3 segments:
+  // NOTE: a title metadata can have these 3 segments:
   title: {
     absolute: 'Smoke weed everyday', // Applied if not blank and if child routes don't have metadata titles i.e setting this on child also overrides layout/parent metadata rules(check "http://localhost:3000/blog/second")
     default: 'Next.js Tutorial - Codevolution', // default is to provide a child route segments with a title that doesn't have it already
