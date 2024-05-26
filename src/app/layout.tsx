@@ -1,4 +1,5 @@
 import { Metadata } from "next"
+import "./styles.css"
 
 export const metadata : Metadata = {
   // a title metadata can have these 3 segments:
