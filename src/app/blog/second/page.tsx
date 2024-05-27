@@ -1,3 +1,5 @@
+import { Metadata } from "next"
+
 export const metadata : Metadata = {
   // NOTE: a title metadata can have these 3 segments:
   title: {
