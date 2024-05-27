@@ -1,4 +1,4 @@
-// To demonstrate paralles routing using slots
+// NOTE: To demonstrate paralles routing using slots
 
 const ComplexDashboardPage = () => {
   return (
