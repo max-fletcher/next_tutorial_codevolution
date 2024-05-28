@@ -12,24 +12,31 @@ function ComplexDashboardLayout({
   children, 
   users, 
   notifications, 
-  revenue 
+  revenue,
+  login
 }: { 
   children: React.ReactNode, 
   users: React.ReactNode, 
   notifications: React.ReactNode, 
-  revenue: React.ReactNode 
+  revenue: React.ReactNode,
+  login: React.ReactNode 
 }) {
-  return (
+
+  const loggedIn = false // in real life, we should get this from storage/cookie/axios call etc.
+
+  return loggedIn ?  (
     <>
       <h2>Complex Dashboard Layout</h2>
       {children}
-      <div style={{ display: "flex" }}>
+      {/* Conditionally rendering using ternary. This is to demonstrate that you can also render slots based on conditions. */}
+      (<div style={{ display: "flex" }}>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div> {users} </div>
           <div> {revenue} </div>
         </div>
         {/* 
-          NOTE: "Notifications" here is swapped with "ArchivedNotifications" and vice versa because of sub-navigation i.e Clicking on a Link on these pages("Default" & "Archived") 
+          NOTE: This is for demonstrating unmatched routes for slots in parallel routing.
+          "Notifications" here is swapped with "ArchivedNotifications" and vice versa because of sub-navigation i.e Clicking on a Link on these pages("Default" & "Archived") 
           will mount the respective component without reloading the page and without affecting the other components(called unmatched components in this case for slots) even though URL is changed.
           However, if you refresh the page when you are in "archived notifications"(without default.tsx existing), you will see that it throws a "NotFound" error because Next.js finds "archived notifications", 
           but doesn't manage to find default slots for unmatched components(i.e "User Analytics" & "Revenue Metrics"). Hence, you need to define a default.tsx in order to have a fallback for "archived notifications"
@@ -37,8 +44,10 @@ function ComplexDashboardLayout({
           hence they need a default.tsx to function properly. (See this - https://www.youtube.com/watch?v=NPtnJ6Ivv9k&list=PLC3y8-rFHvwjOKd6gdf4QtV1uYNiQnruI&index=30)
         */}
         <div style={{ display: "flex", flex: 1 }}> {notifications} </div>
-      </div>
+      </div>)
     </>
+  ) : (
+    login
   )
 }
 
