@@ -29,8 +29,12 @@ function ComplexDashboardLayout({
           <div> {revenue} </div>
         </div>
         {/* 
-          NOTE: "Notifications" here is swapped with "ArchivedNotifications" because of sub-navigation. Clicking on a Link on these pages("Default" & "Archived") 
-          will mount the respective components without reloading the page and without affecting the other components
+          NOTE: "Notifications" here is swapped with "ArchivedNotifications" and vice versa because of sub-navigation i.e Clicking on a Link on these pages("Default" & "Archived") 
+          will mount the respective component without reloading the page and without affecting the other components(called unmatched components in this case for slots) even though URL is changed.
+          However, if you refresh the page when you are in "archived notifications"(without default.tsx existing), you will see that it throws a "NotFound" error because Next.js finds "archived notifications", 
+          but doesn't manage to find default slots for unmatched components(i.e "User Analytics" & "Revenue Metrics"). Hence, you need to define a default.tsx in order to have a fallback for "archived notifications"
+          and any such sub-navigation slots. This is because "archived notifications" is inside @notifications and any other slot-based components inside @notifications will have the same behaviour,
+          hence they need a default.tsx to function properly. (See this - https://www.youtube.com/watch?v=NPtnJ6Ivv9k&list=PLC3y8-rFHvwjOKd6gdf4QtV1uYNiQnruI&index=30)
         */}
         <div style={{ display: "flex", flex: 1 }}> {notifications} </div>
       </div>

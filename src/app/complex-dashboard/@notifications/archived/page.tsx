@@ -6,7 +6,7 @@ const ArchivedNotifications = () => {
     <>
       <Card>
         <div className="block">
-          <div>Archived ArchivedNotifications</div>
+          <div>Archived Notifications</div>
           <Link href="/complex-dashboard" className="text-blue-400">Default</Link>
         </div>
       </Card>
