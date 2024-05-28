@@ -42,6 +42,11 @@ function ComplexDashboardLayout({
           but doesn't manage to find default slots for unmatched components(i.e "User Analytics" & "Revenue Metrics"). Hence, you need to define a default.tsx in order to have a fallback for "archived notifications"
           and any such sub-navigation slots. This is because "archived notifications" is inside @notifications and any other slot-based components inside @notifications will have the same behaviour,
           hence they need a default.tsx to function properly. (See this - https://www.youtube.com/watch?v=NPtnJ6Ivv9k&list=PLC3y8-rFHvwjOKd6gdf4QtV1uYNiQnruI&index=30)
+
+          IMP NOTE: A very important issue that is STILL ACTIVE is when you use a loading.tsx inside the folder of parallel routes. It has an active github issue but
+          was ignored by the maintainers. The workaround is that you use a route group (i.e instead of making ~complex-dashboard/@notifications/page and 
+          ~complex-dashboard/@notifications/loading, we make ~complex-dashboard/@notifications/(notifications)/page and ~complex-dashboard/@notifications/(notifications)/loading
+          and since route groups don't show in URL, it fixes the issue completely.
         */}
         <div style={{ display: "flex", flex: 1 }}> {notifications} </div>
       </div>)
