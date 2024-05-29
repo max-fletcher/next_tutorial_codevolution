@@ -7,10 +7,12 @@ export default function Modal({ children }: { children: React.ReactNode }) {
   const wrapper = useRef(null);
   const router = useRouter();
 
+  // use callback here is used for optimizations only. Can be used without the callback wrapper
   const onDismiss = useCallback(() => {
     router.back();
   }, [router]);
 
+  // use callback here is used for optimizations only. Can be used without the callback wrapper
   const onClick: MouseEventHandler = useCallback(
     (e) => {
       if (e.target === overlay.current || e.target === wrapper.current) {
@@ -20,6 +22,7 @@ export default function Modal({ children }: { children: React.ReactNode }) {
     [onDismiss, overlay, wrapper]
   );
 
+  // use callback here is used for optimizations only. Can be used without the callback wrapper
   const onKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "Escape") onDismiss();
