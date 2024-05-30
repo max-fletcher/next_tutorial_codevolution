@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { comments } from "../data";
 
 // IMP NOTE: import and use "NextRequest" from which we can extract query params from the request object. Hence, the rule of thumb is: 
@@ -31,9 +32,19 @@ export async function GET(request: Request, { params }: { params: {id: string} }
 
   const findComment = comments.find(comment => comment.id === parseInt(params.id))
 
-  return Response.json(findComment)
-}
+  // NOTE: Throw error if comment doesn't exist
+  if(!findComment){
+    return Response.json({ message: "Comment Not Found" }, {
+      status: 404 // In case you wish to send a status code other than 200(default)
+    })
 
+    // NOTE: If you wish to redirect the user to another endpoint. Will replace block above.
+    // redirect("/api/comments")
+  }
+
+  return Response.json(findComment)
+
+}
 // NOTE: 2nd param is supposed to be context, but we are destructuring it here to get route params from it
 export async function PATCH(request: Request, { params }: { params: {id: string} }) {
 
@@ -41,6 +52,18 @@ export async function PATCH(request: Request, { params }: { params: {id: string}
   const { text } = body
 
   const index = comments.findIndex(comment => comment.id === parseInt(params.id))
+
+  // NOTE: Throw error if comment doesn't exist
+  if(!comments[index]){
+    return Response.json({ message: "Comment Not Found" }, {
+      status: 404 // In case you wish to send a status code other than 200(default)
+    })
+
+    // NOTE: If you wish to redirect the user to another endpoint. Will replace block above.
+    // redirect("/api/comments")
+  }
+
+  // NOTE: update comment
   comments[index].text = text
 
   return Response.json(comments[index], {
@@ -53,10 +76,14 @@ export async function DELETE(request: Request, { params }: { params: {id: string
   const index = comments.findIndex(comment => comment.id === parseInt(params.id))
   const deletedComment = comments[index]
 
+  // NOTE: Throw error if comment doesn't exist
   if(!deletedComment){
     return Response.json({ message: "Comment Not Found" }, {
       status: 404 // In case you wish to send a status code other than 200(default)
     })
+
+    // NOTE: If you wish to redirect the user to another endpoint. Will replace block above.
+    // redirect("/api/comments")
   }
 
   comments.splice(index, 1)
