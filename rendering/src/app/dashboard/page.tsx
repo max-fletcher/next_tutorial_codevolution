@@ -1,6 +1,6 @@
 "use client"
 
-// NOTE: states and local storage can only be accessed by server components so we are using client components here
+// NOTE: states and local storage can only be accessed by client components so we are using client components here
 import { useState } from "react"
 
 const Dashboard = () => {
