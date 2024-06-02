@@ -1,7 +1,7 @@
 import { serverSideFunction } from "@/utils/server-utils"
 
 const ServerRoutePage = () => {
-  // NOTE: Calling the function from "/utils/server-utils"
+  // NOTE: Importing and calling the function from "/utils/server-utils".
   const result = serverSideFunction();
 
   return (
