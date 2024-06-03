@@ -7,18 +7,23 @@
 
 // import { serverSideFunction } from "@/utils/server-utils";
 import ImageSlider from "@/utils/ImageSlider"; // This will work fine since this is a client component within a client component
+import { useTheme } from "@/utils/theme-provider"; // Importing "useTheme" here so we can use what was passed down via the context provider in layouts.tsx
 
 const ClientRoutePage = () => {
+
+  const { defaultTheme, name, setName } = useTheme() // Binding useTheme to a variable
+
+  // NOTE: Logging to see what we got from context
+  console.log("colors", defaultTheme, defaultTheme?.colors.primary, name, setName);
+
   console.log("Client route rendered");
   // NOTE: Importing and calling the function from "/utils/server-utils".
   // const result = serverSideFunction();
 
-  const settings = {
-    dots: true,
-  };
   return (
     <>
-      <h1>Client Route Page</h1>
+      {/* NOTE: Using context to set color attribute for style of this element. We are using a color that is defined by "defaultTheme?.colors.primary" or by "defaultTheme?.colors.secondary" */}
+      <h1 style={{color: defaultTheme?.colors.primary}}>Client Route Page</h1>
       {/* <p>{result}</p> */}
 
       {/* This will work fine since this is a client component within a client component */}
