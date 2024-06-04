@@ -1,4 +1,4 @@
-// NOTE: Setting up a json-server on port 3001
+// NOTE: Setting up a json-server on port 3001. Takes data from db.json and serves it as CRUD endpoints.
 
 const jsonServer = require("json-server");
 const server = jsonServer.create();
