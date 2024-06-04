@@ -7,8 +7,9 @@ type User = {
 }
 
 const UsersPage = async () => {
-
-  const response = await fetch("https://jsonplaceholder.typicode.com/users")
+  await new Promise((resolve) => setTimeout(resolve, 2000)) // delay resolving this component for 2 seconds so we can see loading.tsx
+  const response = await fetch("https://jsonplaceholder.typicode.com/users") // For throwing error and showing error.tsx
+  // const response = await fetch("https://jsonplaceholder.typicode.com/users") 
   const users = await response.json()
   console.log(users)
 
