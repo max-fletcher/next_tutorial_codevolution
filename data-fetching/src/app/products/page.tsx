@@ -8,7 +8,7 @@ type Product = {
 const ProductsPage = async () => {
 
   // NOTE: By default, fetch in Next JS caches server data by default so anytime you refresh the page, Next JS will not do another server call so previous data will be shown, so if you change db.json data
-  // and restart json-server and refresh the page, you will the same data and not the new data
+  // and restart json-server and refresh the page, you will the same data and not the new data. The cache data is stored in ".next/cache" directory so deleting ".next" folder will force updated data to be fetched.
   const response = await fetch("http://localhost:3001/products")
   const products = await response.json()
 
