@@ -22,9 +22,12 @@ const ProductsPage = async () => {
   // and restart json-server and refresh the page, you will the same data and not the new data. The cache data is stored in ".next/cache" directory so deleting ".next" folder will force updated data to be fetched.
   // To clear cache, you have to delete .next and re-run the server.
 
-  // NOTE: This is for testing cacheing and how to opt-out of it.
+  // NOTE: This is for testing 2 things: 
+  // 1. cacheing and how to opt-out of it(cache: "no-cache").
+  // 2. how when you make a request to the same URL using "fetch" both above and below a component tree, the server will not do the duplicate request at the bottom of the tree(i.e "/products" page which is /products/page)
+  // and cache and use data from the top one(i.e here which is layout.tsx).
   const response = await fetch("http://localhost:3001/products", {
-    // cache: "no-cache" // This is the most straight-forward way to opt-out of cacheing i.e adding this option
+    cache: "no-cache" // This is the most straight-forward way to opt-out of cacheing i.e adding this option
   })
   const products = await response.json() // Unwrap response data
 
