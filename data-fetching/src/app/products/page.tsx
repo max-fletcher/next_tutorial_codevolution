@@ -1,3 +1,7 @@
+import { cookies } from "next/headers"
+
+export const defaultCache = "default-cache"
+
 type Product = {
   id: string,
   title: string,
@@ -5,23 +9,39 @@ type Product = {
   description: string,
 }
 
+// REMEMBER FROM EARLIER LESSONS: 
+// These are how you opt-out of cacheing. This is done when we are, say, returning values such as current time in the response:
+// 1. Using dynamic mode in "Segment Config Option"
+// 2. Using the Request object with the GET method
+// 3. Using dynamic function like cookies(), headers() and searchParams(). Remember to use "fetch" API call after these functions are called, else, fetch will cache anyway without "no-cache" option.
+// 4. using any HTTP method other than GET
+
 const ProductsPage = async () => {
 
   // NOTE: By default, fetch in Next JS caches server data by default so anytime you refresh the page, Next JS will not do another server call so previous data will be shown, so if you change db.json data
   // and restart json-server and refresh the page, you will the same data and not the new data. The cache data is stored in ".next/cache" directory so deleting ".next" folder will force updated data to be fetched.
+  // To clear cache, you have to delete .next and re-run the server.
 
-  // NOTE: Make a request and cache the response data
-  // const response = await fetch("http://localhost:3001/products")
-
-  // IMP NOTE: As per
-
-  // NOTE: For opt-outing out of cacheing
+  // NOTE: This is for testing cacheing and how to opt-out of it.
   const response = await fetch("http://localhost:3001/products", {
-    cache: "no-cache" // This is the most straight-forward way to opt-out of cacheing i.e adding this option
+    // cache: "no-cache" // This is the most straight-forward way to opt-out of cacheing i.e adding this option
   })
   const products = await response.json() // Unwrap response data
 
-  console.log(products);
+  // NOTE: This is also to opt-out of cacheing, but it opts-out only those "fetch" API calls that are below these lines.
+  const cookieStore = cookies()
+  const theme = cookieStore.get("theme")
+
+  // NOTE: The block below is to demonstrate that the cache: "no-cache" doesn't behave the way you'd expect. If you have 2 fetch calls, you should place the ones with "no-cache" at the top and ones without it
+  // at the bottom. In case you breach this rule, all fetch requests below the 1st fetch request with "no-cache" will not be cached at all despite not having "no-cache". Dunno why. Even Next JS docs don't address
+  // this issue in their docs. Another way to overcome this issue is to use what is called "route segment configuration". Just use the line "export const defaultCache = "default-cache" at the top, delete the ".next" folder
+  // then restart both frontend and backend servers, and the cache behaves as expected.
+  const response2 = await fetch("http://localhost:3001/users", {
+    // cache: "no-cache" // This is the most straight-forward way to opt-out of cacheing i.e adding this option
+  })
+  const users = await response2.json() // Unwrap response data
+  
+  // console.log(products, users);
 
   return (
     <>
