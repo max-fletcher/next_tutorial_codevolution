@@ -1,6 +1,7 @@
 import { cookies } from "next/headers"
 
 export const defaultCache = "default-cache"
+export const revalidate = 10 // This will be used as default if a next: "{ revalidate: ??? }" option is not passed to a fetch call. Also, if this line is used in both the layout and page, the lowest one wins.
 
 type Product = {
   id: string,
@@ -27,13 +28,16 @@ const ProductsPage = async () => {
   // 2. how when you make a request to the same URL using "fetch" both above and below a component tree, the server will not do the duplicate request at the bottom of the tree(i.e "/products" page which is /products/page)
   // and cache and use data from the top one(i.e here which is layout.tsx).
   const response = await fetch("http://localhost:3001/products", {
-    cache: "no-cache" // This is the most straight-forward way to opt-out of cacheing i.e adding this option
+    next: {
+      revalidate: 3
+    }
+    // cache: "no-cache" // This is the most straight-forward way to opt-out of cacheing i.e adding this option
   })
   const products = await response.json() // Unwrap response data
 
   // NOTE: This is also to opt-out of cacheing, but it opts-out only those "fetch" API calls that are below these lines.
-  const cookieStore = cookies()
-  const theme = cookieStore.get("theme")
+  // const cookieStore = cookies()
+  // const theme = cookieStore.get("theme")
 
   // NOTE: The block below is to demonstrate that the cache: "no-cache" doesn't behave the way you'd expect. If you have 2 fetch calls, you should place the ones with "no-cache" at the top and ones without it
   // at the bottom. In case you breach this rule, all fetch requests below the 1st fetch request with "no-cache" will not be cached at all despite not having "no-cache". Dunno why. Even Next JS docs don't address
