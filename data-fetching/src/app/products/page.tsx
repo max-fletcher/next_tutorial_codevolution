@@ -1,7 +1,9 @@
 import { cookies } from "next/headers"
 
 export const defaultCache = "default-cache"
-export const revalidate = 10 // This will be used as default if a next: "{ revalidate: ??? }" option is not passed to a fetch call. Also, if this line is used in both the layout and page, the lowest one wins.
+// NOTE: This will be used as default if a next: "{ revalidate: ??? }" option is not passed to a fetch call. Also, if this line is used in EITHER both the layout and page OR a page has both
+// this config as well as a fetch call with next: "{ revalidate: ??? }" option passed, in both scenarios, the lowest one wins.
+export const revalidate = 10
 
 type Product = {
   id: string,
@@ -26,7 +28,7 @@ const ProductsPage = async () => {
   // NOTE: This is for testing 2 things: 
   // 1. cacheing and how to opt-out of it(cache: "no-cache").
   // 2. how when you make a request to the same URL using "fetch" both above and below a component tree, the server will not do the duplicate request at the bottom of the tree(i.e "/products" page which is /products/page)
-  // and cache and use data from the top one(i.e here which is layout.tsx).
+  // and cache and use data from the top one(i.e here which is layout.tsx). Don't forget to comment out this same fetch call in layout.tsx when testing revalidate.
   const response = await fetch("http://localhost:3001/products", {
     next: {
       revalidate: 3
@@ -47,7 +49,6 @@ const ProductsPage = async () => {
     // cache: "no-cache" // This is the most straight-forward way to opt-out of cacheing i.e adding this option
   })
   const users = await response2.json() // Unwrap response data
-  
   // console.log(products, users);
 
   return (
